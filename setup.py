@@ -159,8 +159,7 @@ setup(
     ],
     entry_points={
         "lms.djangoapp": [
-            "platform_plugin_uamx_social_auth = platform_plugin_uamx_social_auth"
-            ".apps:UamxSocialAuthConfig"
+            "platform_plugin_uamx_social_auth = uamx_social_auth.apps:UamxSocialAuthConfig"
         ]
     }
 )

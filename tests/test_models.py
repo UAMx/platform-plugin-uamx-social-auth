@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Tests for the `uamx-social-auth` models module.
+Tests for the `platform-plugin-uamx-social-auth` models module.
 """
 
 import pytest

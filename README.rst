@@ -1,143 +1,44 @@
-uamx-social-auth
-#############################
-
-.. note::
-
-  This README was auto-generated. Maintainer: please review its contents and
-  update all relevant sections. Instructions to you are marked with
-  "PLACEHOLDER" or "TODO". Update or remove those sections, and remove this
-  note when you are done.
-
-|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
-|license-badge| |status-badge|
+platform-plugin-uamx-social-auth
+###################################
 
 Purpose
 *******
 
-Social authentication pipeline for UAMx
+Plugin for showing TOS form after registration
 
-TODO: The ``README.rst`` file should start with a brief description of the repository and its purpose.
-It should be described in the context of other repositories under the ``openedx``
-organization. It should make clear where this fits in to the overall Open edX
-codebase and should be oriented towards people who are new to the Open edX
-project.
+OpenEdx extension to enable users terms of service acceptance, and keep track of their response
 
-Getting Started with Development
+The project was created with [edx-cookiecutters](https://github.com/openedx/edx-cookiecutters/tree/master), a library for bootstraping OpenEdx extensions. This in particular is a **cookiecutter-django-app**.
+
+How to use it
 ********************************
 
-Please see the Open edX documentation for `guidance on Python development <https://docs.openedx.org/en/latest/developers/how-tos/get-ready-for-python-dev.html>`_ in this repo.
+This app integrates into the LMS and into the LMS admin: 
+- in LMS, for an authenticated user, it shows an alert if the user have not accepted the terms and conditions yet and creates a page in the path `https://DOMAIN_NAME/uamx_social_auth` showing the acceptance form.
+- in LMS admin, at `https://DOMAIN_NAME/admin/uamx_social_auth/termsofservice/`, shows a list of `TermsOfService` entries with one entry for each user, and the ability to switch the acceptance of the TOS. It also shows the date of creation / modification of the model.
 
-Deploying
+![image](https://github.com/UAMx/uamx-social-auth/assets/56433614/6ffc9e54-e70d-47a8-b9c1-5ab9ac767302)
+
+Installation and setup
 *********
 
-TODO: How can a new user go about deploying this component? Is it just a few
-commands? Is there a larger how-to that should be linked here?
+You should use this extension as an extra requirement for OpenEdx. In tutor, you can follow ["Installing extra requirements from private repositories"](https://docs.tutor.overhang.io/configuration.html#installing-extra-requirements-from-private-repositories) instructions, which in summary is: 
 
-PLACEHOLDER: For details on how to deploy this component, see the `deployment how-to`_
+```
+# Download and setup uamx-social-auth as a private requirement
+git clone git@github.com:UAMx/uamx-social-auth.git "$(tutor config printroot)/env/build/openedx/requirements/uamx-social-auth"
+echo "-e ./uamx-social-auth" >> "$(tutor config printroot)/env/build/openedx/requirements/private.txt"
 
-.. _deployment how-to: https://docs.openedx.org/projects/uamx-social-auth/how-tos/how-to-deploy-this-component.html
+# Rebuild the image to deploy changes
+tutor images build openedx
+tutor local launch -I
+```
 
-Getting Help
+Project structure
 ************
 
-Documentation
-=============
+This extension works just like any other Django app, where the app code is in `uamx-social-auth/uamx_social_auth`. The app is deployed to the docker image with `tutor images build openedx` and composed in `tutor local launch`. Is in the compose time where migrations are made and integrated into the db.
 
-PLACEHOLDER: Start by going through `the documentation`_.  If you need more help see below.
+There are many other functionalities like unit tests and CI integration provided by the cookiecutter template which, at the moment, are not in use. 
 
-.. _the documentation: https://docs.openedx.org/projects/uamx-social-auth
-
-(TODO: `Set up documentation <https://openedx.atlassian.net/wiki/spaces/DOC/pages/21627535/Publish+Documentation+on+Read+the+Docs>`_)
-
-More Help
-=========
-
-If you're having trouble, we have discussion forums at
-https://discuss.openedx.org where you can connect with others in the
-community.
-
-Our real-time conversations are on Slack. You can request a `Slack
-invitation`_, then join our `community Slack workspace`_.
-
-For anything non-trivial, the best path is to open an issue in this
-repository with as many details about the issue you are facing as you
-can provide.
-
-https://github.com/UAMx/uamx-social-auth/issues
-
-For more information about these options, see the `Getting Help <https://openedx.org/getting-help>`__ page.
-
-.. _Slack invitation: https://openedx.org/slack
-.. _community Slack workspace: https://openedx.slack.com/
-
-License
-*******
-
-The code in this repository is licensed under the AGPL 3.0 unless
-otherwise noted.
-
-Please see `LICENSE.txt <LICENSE.txt>`_ for details.
-
-Contributing
-************
-
-Contributions are very welcome.
-Please read `How To Contribute <https://openedx.org/r/how-to-contribute>`_ for details.
-
-This project is currently accepting all types of contributions, bug fixes,
-security fixes, maintenance work, or new features.  However, please make sure
-to have a discussion about your new feature idea with the maintainers prior to
-beginning development to maximize the chances of your change being accepted.
-You can start a conversation by creating a new issue on this repo summarizing
-your idea.
-
-The Open edX Code of Conduct
-****************************
-
-All community members are expected to follow the `Open edX Code of Conduct`_.
-
-.. _Open edX Code of Conduct: https://openedx.org/code-of-conduct/
-
-People
-******
-
-The assigned maintainers for this component and other project details may be
-found in `Backstage`_. Backstage pulls this data from the ``catalog-info.yaml``
-file in this repo.
-
-.. _Backstage: https://backstage.openedx.org/catalog/default/component/uamx-social-auth
-
-Reporting Security Issues
-*************************
-
-Please do not report security issues in public. Please email security@openedx.org.
-
-.. |pypi-badge| image:: https://img.shields.io/pypi/v/uamx-social-auth.svg
-    :target: https://pypi.python.org/pypi/uamx-social-auth/
-    :alt: PyPI
-
-.. |ci-badge| image:: https://github.com/UAMx/uamx-social-auth/workflows/Python%20CI/badge.svg?branch=main
-    :target: https://github.com/UAMx/uamx-social-auth/actions
-    :alt: CI
-
-.. |codecov-badge| image:: https://codecov.io/github/UAMx/uamx-social-auth/coverage.svg?branch=main
-    :target: https://codecov.io/github/UAMx/uamx-social-auth?branch=main
-    :alt: Codecov
-
-.. |doc-badge| image:: https://readthedocs.org/projects/uamx-social-auth/badge/?version=latest
-    :target: https://docs.openedx.org/projects/uamx-social-auth
-    :alt: Documentation
-
-.. |pyversions-badge| image:: https://img.shields.io/pypi/pyversions/uamx-social-auth.svg
-    :target: https://pypi.python.org/pypi/uamx-social-auth/
-    :alt: Supported Python versions
-
-.. |license-badge| image:: https://img.shields.io/github/license/UAMx/uamx-social-auth.svg
-    :target: https://github.com/UAMx/uamx-social-auth/blob/main/LICENSE.txt
-    :alt: License
-
-.. TODO: Choose one of the statuses below and remove the other status-badge lines.
-.. |status-badge| image:: https://img.shields.io/badge/Status-Experimental-yellow
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Maintained-brightgreen
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Deprecated-orange
-.. .. |status-badge| image:: https://img.shields.io/badge/Status-Unsupported-red
+> NOTE: currently we don't know how to notify mako of the templates used locally in this repo, so to inject them as part of the LMS (as in the screenshot below) you should add a template at `lms/templates/uamx_social_auth` into the theme [like this](https://github.com/UAMx/uamx-theme/tree/main/lms/templates/uamx_social_auth)

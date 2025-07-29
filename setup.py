@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Package metadata for uamx_social_auth.
+Package metadata for platform_plugin_uamx_social_auth.
 """
 import os
 import re
@@ -117,7 +117,7 @@ def is_requirement(line):
     return line and line.strip() and not line.startswith(("-r", "#", "-e", "git+", "-c"))
 
 
-VERSION = get_version('uamx_social_auth', '__init__.py')
+VERSION = get_version('platform_plugin_uamx_social_auth', '__init__.py')
 
 if sys.argv[-1] == 'tag':
     print("Tagging the version on github:")
@@ -129,39 +129,40 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.rst'), encoding="u
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst'), encoding="utf8").read()
 
 setup(
-    name='uamx-social-auth',
+    name='platform-plugin-uamx-social-auth',
     version=VERSION,
-    description="""Social authentication pipeline for UAMx""",
+    description="""PLugin for showing TOS form after registration""",
     long_description=README + '\n\n' + CHANGELOG,
-    author='Angel Lareo',
-    author_email='angel.lareo@uam.es',
-    url='https://github.com/UAMx/uamx-social-auth',
+    author='Yago Bernabé García',
+    author_email='yago.bernabe@uam.es',
+    url='https://github.com/UAMx/platform-plugin-uamx-social-auth',
     packages=find_packages(
-        include=['uamx_social_auth', 'uamx_social_auth.*'],
+        include=['platform_plugin_uamx_social_auth', 'platform_plugin_uamx_social_auth.*'],
         exclude=["*tests"],
     ),
-
+    entry_points={
+        "lms.djangoapp": [
+            "platform_plugin_uamx_social_auth = platform_plugin_uamx_social_auth.apps:UamxSocialAuthConfig"
+        ],
+        "cms.djangoapp": [
+            "platform_plugin_uamx_social_auth = platform_plugin_uamx_social_auth.apps:UamxSocialAuthConfig"
+        ],
+    },
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),
-    python_requires=">=3.8",
+    python_requires=">=3.11",
     license="AGPL 3.0",
     zip_safe=False,
     keywords='Python edx',
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Framework :: Django',
-        'Framework :: Django :: 3.2',
+        'Framework :: Django :: 4.2',
+        'Framework :: Django :: 5.2',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)',
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.11',
     ],
-    entry_points={
-        "lms.djangoapp": [
-            "uamx_social_auth = uamx_social_auth.apps:UamxSocialAuthConfig",
-        ],
-        "cms.djangoapp": [
-        ],
-    }
 )

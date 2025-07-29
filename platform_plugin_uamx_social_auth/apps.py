@@ -1,5 +1,7 @@
 """
-uamx_social_auth Django application initialization.
+platform_plugin_uamx_social_auth Django application initialization.
+
+See https://edx.readthedocs.io/projects/edx-django-utils/en/latest/plugins/how_tos/how_to_create_a_plugin_app.html
 """
 
 from django.apps import AppConfig
@@ -8,11 +10,13 @@ from edx_django_utils.plugins.constants import PluginSettings
 class UamxSocialAuthConfig(AppConfig):
     """
     Configuration for the uamx_social_auth Django application.
+
+    https://edx.readthedocs.io/projects/edx-django-utils/en/latest/plugins/how_tos/how_to_create_a_plugin_app.html
     """
 
-    name = 'uamx_social_auth'
+    name = 'platform_plugin_uamx_social_auth'
 
-    # Class attribute that configures and enables this app as a Plugin App.
+     # Class attribute that configures and enables this app as a Plugin App.
     plugin_app = {
 
         # Configuration setting for Plugin Settings for this app.

@@ -32,14 +32,14 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.messages',
     'django.contrib.sessions',
-    'uamx_social_auth',
+    'platform_plugin_uamx_social_auth',
 )
 
 LOCALE_PATHS = [
-    root('uamx_social_auth', 'conf', 'locale'),
+    root('platform_plugin_uamx_social_auth', 'conf', 'locale'),
 ]
 
-ROOT_URLCONF = 'uamx_social_auth.urls'
+ROOT_URLCONF = 'platform_plugin_uamx_social_auth.urls'
 
 SECRET_KEY = 'insecure-secret-key'
 

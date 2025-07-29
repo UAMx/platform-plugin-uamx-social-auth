@@ -1,12 +1,12 @@
-.. uamx-social-auth documentation top level file, created by
-   sphinx-quickstart on Wed Jan 17 12:58:43 2024.
+.. platform-plugin-uamx-social-auth documentation top level file, created by
+   sphinx-quickstart on Fri Jun 27 09:43:56 2025.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-uamx-social-auth
-================
+platform-plugin-uamx-social-auth
+===================================
 
-Social authentication pipeline for UAMx
+PLugin for showing TOS form after registration
 
 Contents:
 

@@ -8,7 +8,7 @@ this choice.
 
 Follow the `internationalization coding guidelines`_ in the edX Developer's Guide when developing new features.
 
-.. _internationalization coding guidelines: https://edx.readthedocs.org/projects/edx-developer-guide/en/latest/internationalization/i18n.html
+.. _internationalization coding guidelines: https://docs.openedx.org/en/latest/developers/references/developer_guide/internationalization/i18n.html
 
 Updating Translations
 *********************
@@ -34,8 +34,6 @@ The `make` targets listed below can be used to push or pull translations.
       - Description
     * - pull_translations
       - Pull translations from Transifex
-    * - push_translations
-      - Push source translation files to Transifex
 
 Fake Translations
 *****************

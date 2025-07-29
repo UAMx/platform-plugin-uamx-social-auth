@@ -129,9 +129,9 @@ if "%1" == "qthelp" (
 	echo.
 	echo.Build finished; now you can run "qcollectiongenerator" with the ^
 .qhcp project file in %BUILDDIR%/qthelp, like this:
-	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\uamx-social-auth.qhcp
+	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\platform-plugin-uamx-social-auth.qhcp
 	echo.To view the help file:
-	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\uamx-social-auth.ghc
+	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\platform-plugin-uamx-social-auth.ghc
 	goto end
 )
 

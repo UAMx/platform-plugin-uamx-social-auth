@@ -1,6 +1,6 @@
 .PHONY: clean clean_tox compile_translations coverage diff_cover docs dummy_translations \
-        extract_translations fake_translations help pii_check pull_translations push_translations \
-        quality requirements selfcheck test test-all upgrade validate install_transifex_client
+        extract_translations fake_translations help pii_check pull_translations \
+        quality requirements selfcheck test test-all upgrade compile-requirements validate install_transifex_client
 
 .DEFAULT_GOAL := help
 
@@ -33,14 +33,12 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	$(BROWSER)docs/_build/html/index.html
 
 # Define PIP_COMPILE_OPTS=-v to get more information during make upgrade.
-PIP_COMPILE = pip-compile --upgrade $(PIP_COMPILE_OPTS)
+PIP_COMPILE = pip-compile $(PIP_COMPILE_OPTS)
 
-upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
-upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
+compile-requirements: ## compile the requirements/*.txt files with the latest packages satisfying requirements/*.in
 	pip install -qr requirements/pip-tools.txt
-	# Make sure to compile files after any other files they include!
-	$(PIP_COMPILE) --allow-unsafe -o requirements/pip.txt requirements/pip.in
-	$(PIP_COMPILE) -o requirements/pip-tools.txt requirements/pip-tools.in
+	pip-compile -v ${COMPILE_OPTS} --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
+	pip-compile -v ${COMPILE_OPTS} -o requirements/pip-tools.txt requirements/pip-tools.in
 	pip install -qr requirements/pip.txt
 	pip install -qr requirements/pip-tools.txt
 	$(PIP_COMPILE) -o requirements/base.txt requirements/base.in
@@ -52,6 +50,10 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 	# Let tox control the Django version for tests
 	sed '/^[dD]jango==/d' requirements/test.txt > requirements/test.tmp
 	mv requirements/test.tmp requirements/test.txt
+
+upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
+	pip install -qr requirements/pip-tools.txt
+	$(MAKE) compile-requirements COMPILE_OPTS="--upgrade"
 
 quality: ## check coding style with pycodestyle and pylint
 	tox -e quality
@@ -85,30 +87,36 @@ selfcheck: ## check that the Makefile is well-formed
 
 extract_translations: ## extract strings to be translated, outputting .mo files
 	rm -rf docs/_build
-	cd uamx_social_auth && i18n_tool extract --no-segment
+	cd platform_plugin_uamx_social_auth && i18n_tool extract --no-segment
 
 compile_translations: ## compile translation files, outputting .po files for each supported language
-	cd uamx_social_auth && i18n_tool generate
+	cd platform_plugin_uamx_social_auth && i18n_tool generate
 
 detect_changed_source_translations:
-	cd uamx_social_auth && i18n_tool changed
+	cd platform_plugin_uamx_social_auth && i18n_tool changed
 
 ifeq ($(OPENEDX_ATLAS_PULL),)
 pull_translations: ## Pull translations from Transifex
-	tx pull -t -a -f --mode reviewed
+	tx pull -t -a -f --mode reviewed --minimum-perc=1
+else
+# Experimental: OEP-58 Pulls translations using atlas
+pull_translations:
+	find platform_plugin_uamx_social_auth/conf/locale -mindepth 1 -maxdepth 1 -type d -exec rm -r {} \;
+	atlas pull $(OPENEDX_ATLAS_ARGS) translations/platform-plugin-uamx-social-auth/platform_plugin_uamx_social_auth/conf/locale:platform_plugin_uamx_social_auth/conf/locale
+	python manage.py compilemessages
 
-push_translations: ## push source translation files (.po) from Transifex
-	tx push -s
+	@echo "Translations have been pulled via Atlas and compiled."
+endif
 
 dummy_translations: ## generate dummy translation (.po) files
-	cd uamx_social_auth && i18n_tool dummy
+	cd platform_plugin_uamx_social_auth && i18n_tool dummy
 
 build_dummy_translations: extract_translations dummy_translations compile_translations ## generate and compile dummy translation files
 
 validate_translations: build_dummy_translations detect_changed_source_translations ## validate translations
 
 install_transifex_client: ## Install the Transifex client
-	# Instaling client will skip CHANGELOG and LICENSE files from git changes
+	# Installing client will skip CHANGELOG and LICENSE files from git changes
 	# so remind the user to commit the change first before installing client.
 	git diff -s --exit-code HEAD || { echo "Please commit changes first."; exit 1; }
 	curl -o- https://raw.githubusercontent.com/transifex/cli/master/install.sh | bash

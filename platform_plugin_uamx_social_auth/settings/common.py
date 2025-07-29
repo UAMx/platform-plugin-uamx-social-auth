@@ -1,6 +1,10 @@
 # Add Filter configuration to show Terms of Service modal on every user login
 # based on https://docs.openedx.org/projects/openedx-filters/en/latest/how-tos/using-filters.html
 
+INSTALLED_APPS = [
+    "platform_plugin_uamx_social_auth",
+]
+
 # lint-amnesty, pylint: disable=missing-function-docstring, missing-module-docstring
 def plugin_settings(settings):
 

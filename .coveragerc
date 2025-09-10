@@ -1,7 +1,7 @@
 [run]
 branch = True
 data_file = .coverage
-source=uamx_social_auth
+source=platform_plugin_uamx_social_auth
 omit =
     test_settings.py
     */migrations/*

@@ -1,3 +1,3 @@
 """
-Database models for uamx_social_auth.
+Database models for platform_plugin_uamx_social_auth.
 """

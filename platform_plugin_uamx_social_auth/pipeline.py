@@ -68,7 +68,6 @@ class StopUAMDomainLogin(PipelineStep):
 
     From https://github.com/eduNEXT/openedx-filters-samples/blob/master/openedx_filters_samples/samples/pipeline.py
     """
-
     def run_filter(self, user, *args, **kwargs):  # pylint: disable=arguments-differ
         if user and user.email.endswith("uam.es"):
             raise StudentLoginRequested.PreventLogin(

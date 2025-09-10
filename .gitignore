@@ -57,8 +57,8 @@ output/*/index.html
 # Sphinx
 docs/_build
 docs/modules.rst
-docs/uamx_social_auth.rst
-docs/uamx_social_auth.*.rst
+docs/platform_plugin_uamx_social_auth.rst
+docs/platform_plugin_uamx_social_auth.*.rst
 
 # Private requirements
 requirements/private.in

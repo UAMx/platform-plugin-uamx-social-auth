@@ -9,7 +9,7 @@ from edx_django_utils.plugins.constants import PluginSettings
 
 class UamxSocialAuthConfig(AppConfig):
     """
-    Configuration for the uamx_social_auth Django application.
+    Configuration for the platform_plugin_uamx_social_auth Django application.
 
     https://edx.readthedocs.io/projects/edx-django-utils/en/latest/plugins/how_tos/how_to_create_a_plugin_app.html
     """

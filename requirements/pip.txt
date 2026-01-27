@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-wheel==0.45.1
+wheel>=0.46.2
     # via -r python-template/placeholder_repo_name_0/requirements/pip.in
 
 # The following packages are considered to be unsafe in a requirements file:
